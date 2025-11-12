@@ -1,0 +1,1696 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pose — Where Every View Pays Instantly</title>
+  <meta name="description" content="Pose: a creator-first platform for African creators. Multiple monetization systems, instant payouts, and clean UX." />
+  <style>
+    /* ====== CSS Variables for Theme ====== */
+    :root {
+      --primary: #4C1D95;
+      --primary-light: #6D28D9;
+      --primary-dark: #3B0764;
+      --bg-main: #f7f8fb;
+      --bg-card: #ffffff;
+      --text-primary: #111;
+      --text-secondary: #666;
+      --text-muted: #999;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ====== Reset & Base ====== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    html,body{height:100%;overflow-x:hidden}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+      line-height:1.6;
+      color:var(--text-primary);
+      background:var(--bg-main);
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none;transition:var(--transition)}
+    button{font-family:inherit;cursor:pointer;transition:var(--transition)}
+    img{max-width:100%;display:block}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+
+    /* ====== Loading Spinner ====== */
+    .spinner{
+      display:inline-block;
+      width:20px;
+      height:20px;
+      border:3px solid rgba(255,255,255,0.3);
+      border-top-color:#fff;
+      border-radius:50%;
+      animation:spin 0.8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ====== Toast Notifications ====== */
+    .toast-container{
+      position:fixed;
+      top:20px;
+      right:20px;
+      z-index:9999;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      pointer-events:none;
+    }
+    .toast{
+      background:var(--bg-card);
+      padding:16px 20px;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-lg);
+      min-width:300px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      pointer-events:all;
+      animation:slideIn 0.3s ease;
+    }
+    .toast.success{border-left:4px solid #10b981}
+    .toast.error{border-left:4px solid #ef4444}
+    .toast.info{border-left:4px solid #3b82f6}
+    @keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+    /* ====== Navigation Bar ====== */
+    .navbar{
+      background:var(--bg-card);
+      border-bottom:1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:100;
+      box-shadow:var(--shadow-sm);
+    }
+    .nav-content{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .logo{
+      font-weight:800;
+      font-size:24px;
+      color:var(--primary);
+      letter-spacing:-0.5px;
+    }
+    .nav-links{
+      display:flex;
+      gap:24px;
+      align-items:center;
+    }
+    .nav-links a{
+      color:var(--text-secondary);
+      font-weight:500;
+      font-size:14px;
+    }
+    .nav-links a:hover{color:var(--primary)}
+    .user-menu{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .user-avatar{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      background:var(--primary);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    /* ====== Hero Section ====== */
+    header.hero{
+      padding:60px 0 40px;
+      display:grid;
+      grid-template-columns:1.2fr 1fr;
+      gap:48px;
+      align-items:center;
+    }
+    h1{
+      font-size:48px;
+      font-weight:800;
+      line-height:1.1;
+      margin-bottom:20px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .lead{
+      font-size:18px;
+      color:var(--text-secondary);
+      margin-bottom:32px;
+      line-height:1.7;
+    }
+    .cta-row{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      padding:14px 28px;
+      border-radius:var(--radius-md);
+      font-weight:600;
+      font-size:15px;
+      border:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .btn:disabled{opacity:0.6;cursor:not-allowed}
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+      box-shadow:0 4px 14px rgba(76,29,149,0.3);
+    }
+    .btn-primary:hover:not(:disabled){
+      background:var(--primary-light);
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(76,29,149,0.4);
+    }
+    .btn-secondary{
+      background:transparent;
+      border:2px solid var(--border);
+      color:var(--text-primary);
+    }
+    .btn-secondary:hover{
+      border-color:var(--primary);
+      color:var(--primary);
+    }
+
+    /* ====== Hero Card ====== */
+    .hero-card{
+      background:var(--bg-card);
+      padding:32px;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-lg);
+    }
+    .hero-card h3{
+      font-size:20px;
+      margin-bottom:12px;
+    }
+    .stats-preview{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      margin-top:24px;
+    }
+    .stat-box{
+      background:linear-gradient(135deg,#f3f4f6,#e5e7eb);
+      padding:20px;
+      border-radius:var(--radius-md);
+      text-align:center;
+    }
+    .stat-value{
+      font-size:28px;
+      font-weight:800;
+      color:var(--primary);
+      margin-bottom:4px;
+    }
+    .stat-label{
+      font-size:12px;
+      color:var(--text-secondary);
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+
+    /* ====== Feature Cards ====== */
+    .features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+      margin:60px 0;
+    }
+    .feature-card{
+      background:var(--bg-card);
+      padding:32px;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);
+      transition:var(--transition);
+      border:1px solid transparent;
+    }
+    .feature-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-lg);
+      border-color:var(--primary);
+    }
+    .feature-icon{
+      width:48px;
+      height:48px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      border-radius:var(--radius-md);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      margin-bottom:20px;
+    }
+    .feature-card h3{
+      font-size:20px;
+      margin-bottom:12px;
+    }
+    .feature-card p{
+      color:var(--text-secondary);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    /* ====== Monetization Section ====== */
+    .monet-section{
+      background:var(--bg-card);
+      padding:48px;
+      border-radius:var(--radius-lg);
+      margin:60px 0;
+      box-shadow:var(--shadow-md);
+    }
+    .section-header{
+      text-align:center;
+      max-width:700px;
+      margin:0 auto 48px;
+    }
+    .section-header h2{
+      font-size:36px;
+      margin-bottom:16px;
+    }
+   .monet-tabs {
+  display: flex;
+  justify-content: space-between; /* Spread evenly */
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+
+.monet-tab {
+  flex: 1;                  /* ✅ Makes each tab auto-resize equally */
+  text-align: center;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-main);
+  border: 2px solid transparent;
+  font-weight: 600;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.monet-tab:hover {
+  border-color: var(--primary);
+}
+
+.monet-tab.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+    .monet-content{
+      padding:32px;
+      background:var(--bg-main);
+      border-radius:var(--radius-md);
+      min-height:200px;
+    }
+    .monet-content h3{
+      font-size:24px;
+      margin-bottom:16px;
+      color:var(--primary);
+    }
+    .monet-content ul{
+      margin:16px 0;
+      padding-left:24px;
+    }
+    .monet-content li{
+      margin:8px 0;
+      color:var(--text-secondary);
+    }
+
+    /* ====== Profile Section ====== */
+    .profile-section{
+      background:var(--bg-card);
+      padding:32px;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);
+      margin:40px 0;
+    }
+    .profile-header{
+      display:flex;
+      gap:24px;
+      align-items:flex-start;
+      padding-bottom:24px;
+      border-bottom:1px solid var(--border);
+    }
+    .profile-avatar{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--primary),var(--primary-light));
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      font-size:32px;
+      flex-shrink:0;
+    }
+    .profile-info{
+      flex:1;
+    }
+    .profile-name{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .profile-name h2{
+      font-size:24px;
+    }
+    .verified{
+      color:var(--primary);
+      font-size:20px;
+    }
+    .profile-handle{
+      color:var(--text-secondary);
+      margin-bottom:12px;
+    }
+    .profile-stats{
+      display:flex;
+      gap:24px;
+      margin-top:16px;
+      flex-wrap:wrap;
+    }
+    .profile-stat{
+      text-align:center;
+    }
+    .profile-stat-value{
+      font-size:20px;
+      font-weight:700;
+      color:var(--primary);
+    }
+    .profile-stat-label{
+      font-size:12px;
+      color:var(--text-secondary);
+      text-transform:uppercase;
+    }
+    .profile-actions{
+      display:flex;
+      gap:12px;
+    }
+
+    /* ====== Tabs ====== */
+    .tabs{
+      display:flex;
+      gap:8px;
+      margin:24px 0;
+      border-bottom:2px solid var(--border);
+      overflow-x:auto;
+    }
+    .tab{
+      padding:12px 20px;
+      border-radius:var(--radius-sm) var(--radius-sm) 0 0;
+      font-weight:600;
+      color:var(--text-secondary);
+      border-bottom:3px solid transparent;
+      margin-bottom:-2px;
+      white-space:nowrap;
+    }
+    .tab:hover{
+      color:var(--primary);
+      background:rgba(76,29,149,0.05);
+    }
+    .tab.active{
+      color:var(--primary);
+      border-bottom-color:var(--primary);
+    }
+
+    /* ====== Content Grid ====== */
+    .content-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+      gap:20px;
+      margin:24px 0;
+    }
+    .video-card{
+      background:var(--bg-card);
+      border-radius:var(--radius-md);
+      overflow:hidden;
+      box-shadow:var(--shadow-sm);
+      transition:var(--transition);
+      cursor:pointer;
+    }
+    .video-card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-md);
+    }
+    .video-thumbnail{
+      width:100%;
+      height:180px;
+      background:linear-gradient(135deg,#e5e7eb,#d1d5db);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:var(--text-secondary);
+      font-size:48px;
+      position:relative;
+    }
+    .video-badge{
+      position:absolute;
+      top:12px;
+      right:12px;
+      background:rgba(0,0,0,0.8);
+      color:white;
+      padding:4px 12px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:600;
+    }
+    .video-info{
+      padding:16px;
+    }
+    .video-title{
+      font-weight:600;
+      margin-bottom:8px;
+    }
+    .video-meta{
+      font-size:13px;
+      color:var(--text-secondary);
+    }
+
+    /* ====== Post Feed ====== */
+    .feed{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+      margin:24px 0;
+    }
+    .post{
+      background:var(--bg-card);
+      padding:24px;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-sm);
+      transition:var(--transition);
+    }
+    .post:hover{
+      box-shadow:var(--shadow-md);
+    }
+    .post-header{
+      display:flex;
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .post-avatar{
+      width:48px;
+      height:48px;
+      border-radius:50%;
+      background:var(--primary);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:600;
+      flex-shrink:0;
+    }
+    .post-author{
+      flex:1;
+    }
+    .post-author-name{
+      font-weight:600;
+      margin-bottom:2px;
+    }
+    .post-time{
+      font-size:13px;
+      color:var(--text-secondary);
+    }
+    .post-content{
+      margin-bottom:16px;
+      line-height:1.6;
+    }
+    .post-media{
+      margin:16px 0;
+      border-radius:var(--radius-md);
+      overflow:hidden;
+    }
+    .post-media img{
+      width:100%;
+      height:auto;
+    }
+    .post-actions{
+      display:flex;
+      gap:24px;
+      padding-top:12px;
+      border-top:1px solid var(--border);
+    }
+    .post-action{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      color:var(--text-secondary);
+      font-size:14px;
+      padding:8px 12px;
+      border-radius:var(--radius-sm);
+      transition:var(--transition);
+    }
+    .post-action:hover{
+      background:var(--bg-main);
+      color:var(--primary);
+    }
+
+    /* ====== Form Styles ====== */
+    .form-group{
+      margin-bottom:20px;
+    }
+    .form-label{
+      display:block;
+      font-weight:600;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .form-input,
+    .form-textarea{
+      width:100%;
+      padding:12px 16px;
+      border:2px solid var(--border);
+      border-radius:var(--radius-md);
+      font-size:15px;
+      transition:var(--transition);
+      background:var(--bg-card);
+    }
+    .form-input:focus,
+    .form-textarea:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(76,29,149,0.1);
+    }
+    .form-textarea{
+      resize:vertical;
+      min-height:120px;
+      font-family:inherit;
+    }
+    .form-file{
+      padding:12px;
+      border:2px dashed var(--border);
+      border-radius:var(--radius-md);
+      text-align:center;
+      cursor:pointer;
+      transition:var(--transition);
+    }
+    .form-file:hover{
+      border-color:var(--primary);
+      background:rgba(76,29,149,0.02);
+    }
+    .form-checkbox{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .form-checkbox input{
+      width:20px;
+      height:20px;
+      cursor:pointer;
+    }
+
+    /* ====== Upload Section ====== */
+    .upload-section{
+      background:var(--bg-card);
+      padding:32px;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);
+      margin:40px 0;
+    }
+
+    /* ====== Footer ====== */
+    footer{
+      background:var(--bg-card);
+      padding:32px 24px;
+      text-align:center;
+      color:var(--text-secondary);
+      border-top:1px solid var(--border);
+      margin-top:60px;
+    }
+
+    /* ====== Responsive Design ====== */
+    @media(max-width:1024px){
+      .container{padding:20px}
+      header.hero{grid-template-columns:1fr;gap:32px}
+      .content-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+    }
+
+    @media(max-width:768px){
+      h1{font-size:36px}
+      .lead{font-size:16px}
+      .cta-row{flex-direction:column}
+      .btn{width:100%;justify-content:center}
+      .features{grid-template-columns:1fr}
+      .monet-section{padding:24px}
+      .section-header h2{font-size:28px}
+      .monet-tabs{flex-wrap:nowrap;overflow-x:auto}
+      .profile-header{flex-direction:column}
+      .profile-avatar{width:100px;height:100px;font-size:28px}
+      .profile-actions{width:100%;flex-direction:column}
+      .profile-actions .btn{width:100%}
+      .content-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+      .tabs{gap:4px}
+      .tab{padding:10px 16px;font-size:14px}
+    }
+
+    @media(max-width:480px){
+      h1{font-size:28px}
+      .logo{font-size:20px}
+      .nav-content{padding:12px 16px}
+      .container{padding:16px}
+      .monet-content{padding:20px}
+      .content-grid{grid-template-columns:1fr}
+      .stats-preview{grid-template-columns:1fr}
+      .hero-card{padding:24px}
+    }
+
+    /* ====== Utility Classes ====== */
+    .hidden{display:none!important}
+    .text-center{text-align:center}
+    .mt-1{margin-top:8px}
+    .mt-2{margin-top:16px}
+    .mt-3{margin-top:24px}
+    .mb-1{margin-bottom:8px}
+    .mb-2{margin-bottom:16px}
+    .mb-3{margin-bottom:24px}
+    
+    
+    /* ====== Pose — Features Section CSS ====== */
+#features {
+  padding: 4rem 1.5rem;
+  background: transparent;            /* change if you want a subtle tint */
+  color: #111827;                     /* dark text */
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Section header */
+#features > h3 {
+  font-size: 2rem;                    /* 32px */
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  line-height: 1.05;
+  color: #0f172a;
+}
+
+/* grid container */
+#features .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;                        /* 20px */
+  align-items: start;
+}
+
+/* single feature card (each child div) */
+#features .grid > div {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.25rem;                    /* 20px */
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  border: 1px solid rgba(15, 23, 42, 0.03);
+}
+
+/* hover / focus state for interactive feel */
+#features .grid > div:hover,
+#features .grid > div:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.10);
+}
+
+/* feature title */
+#features h4 {
+  font-size: 1.125rem;                /* 18px */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+/* feature paragraph */
+#features p {
+  color: #374151;                      /* slightly muted dark */
+  font-size: 0.97rem;                  /* ~15.5px */
+  line-height: 1.6;
+}
+
+/* emphasize strong inside the feature text */
+#features p strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+/* Responsive: single column on narrow screens */
+@media (max-width: 900px) {
+  #features .grid {
+    grid-template-columns: 1fr;
+  }
+
+  #features > h3 {
+    font-size: 1.75rem;                /* slightly smaller on small screens */
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  #features .grid > div,
+  #features .grid > div:hover,
+  #features .grid > div:focus-within {
+    transition: none;
+    transform: none;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">POSE</div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#monetization">Monetization</a>
+        <a href="#profile">Profile</a>
+      </div>
+      <div class="user-menu">
+        
+        <div class="user-avatar hidden" id="userAvatar">U</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <header class="hero">
+      <div>
+        <h1>Where every view pays instantly</h1>
+        <p class="lead">Built for Nigerian & African creators — multiple monetization systems, instant payouts, and creator-first control.</p>
+        <div class="cta-row">
+          <button class="btn btn-primary" id="btnGetStarted">
+            🚀 Become a Creator
+          </button>
+          <button class="btn btn-secondary" id="btnWatchDemo">
+            ▶️ Watch Demo
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <h3>Quick Demo Access</h3>
+        <p style="color:var(--text-secondary);margin-bottom:20px">Sign up, upload content, and try Pay-to-Watch — payments flow directly to your wallet.</p>
+        
+        <button class="btn btn-primary" id="btnDemoLogin" style="width:100%;margin-bottom:12px">
+          Try Demo Account
+        </button>
+        <button class="btn btn-secondary" id="btnClearDemo" style="width:100%">
+          Sign Out
+        </button>
+
+        <div class="stats-preview">
+          <div class="stat-box">
+            <div class="stat-value">₦50</div>
+            <div class="stat-label">Per Paid View</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">₦200</div>
+            <div class="stat-label">Per 1K Ad Views</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Feature Cards -->
+    <section class="features" id="features">
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Instant Pay-to-Watch</h3>
+        <p>Creators set prices for exclusive clips — get paid from 100+ views with instant micro-payments to your wallet.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Smart Ad Revenue</h3>
+        <p>Non-intrusive ad placements with ad-share revenue for creators. Your content, your earnings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>70–85% Payouts</h3>
+        <p>Industry-leading revenue share for creators — transparent, instant, and always in your control.</p>
+      </div>
+    </section>
+<section id="features" class="py-16 px-6 max-w-5xl mx-auto">
+    <h3 class="text-3xl font-bold text-center mb-10">Why Creators Love Pose</h3>
+    <div class="grid md:grid-cols-2 gap-10">
+      <div>
+        <h4 class="font-bold text-xl mb-2">Instant Pay-to-Watch</h4>
+        <p>Creators can set prices for exclusive videos and earn from as little as 100 views — no more waiting for payout thresholds.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-xl mb-2">Smart Ad Revenue</h4>
+        <p>Ads are placed neatly, never disturbing content — creators earn from comment section engagement or banner ads.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-xl mb-2">Exclusive Without Ads</h4>
+        <p>We’re creating a platform where users can enjoy premium, exclusive videos completely <strong>ad-free</strong>. Your money goes directly to the creators — not to ads or corporate middlemen.</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-xl mb-2">Flexible Payment System</h4>
+        <p>Pose allows users to use their funds to watch content freely, without being limited by monthly subscriptions. You only pay for what you love — on your terms.</p>
+      </div>
+    </div>
+  </section>
+    <!-- Monetization Section -->
+    <section class="monet-section" id="monetization">
+      <div class="section-header">
+        <h2>Full Monetization Systems</h2>
+        <p style="color:var(--text-secondary)">Flexible, tiered revenue systems so creators can choose what works best for their content and audience.</p>
+      </div>
+
+      <div class="monet-tabs" id="monetTabs">
+        <button class="monet-tab active" data-tab="pay">💎 Pay-to-Watch</button>
+        <button class="monet-tab" data-tab="smart">📺 Smart Ads</button>
+        <button class="monet-tab" data-tab="comment">💬 Comment Ads</button>
+        <button class="monet-tab" data-tab="instant">⚡ Instant Video</button>
+        <button class="monet-tab" data-tab="banner">🎬 Banner Rewards</button>
+        
+      </div>
+
+      <div class="monet-content" id="monetContent">
+        <!-- Content loaded by JS -->
+      </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile-section" id="profile">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">PK</div>
+        <div class="profile-info">
+          <div class="profile-name">
+            <h2 id="profileName">Pose Creator</h2>
+            <span class="verified">✓</span>
+            <span class="profile-handle">@posecreator</span>
+          </div>
+          <p style="color:var(--text-secondary);margin:8px 0">African creator • Skits • Dance • Exclusive content</p>
+          <div class="profile-stats">
+            <div class="profile-stat">
+              <div class="profile-stat-value">12.5K</div>
+              <div class="profile-stat-label">Followers</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">804</div>
+              <div class="profile-stat-label">Following</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">108K</div>
+              <div class="profile-stat-label">Likes</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">550K</div>
+              <div class="profile-stat-label">Views</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-value">₦82,400</div>
+              <div class="profile-stat-label">Earnings</div>
+            </div>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn btn-secondary" id="btnEditProfile">Edit Profile</button>
+          <button class="btn btn-primary" id="btnWallet">💳 Wallet</button>
+        </div>
+      </div>
+
+      <div class="tabs" id="mainTabs">
+        <button class="tab active" data-tab="feed">📹 Videos</button>
+        <button class="tab" data-tab="exclusive">🔒 Exclusive</button>
+        <button class="tab" data-tab="shorts">⚡ Shorts</button>
+        <button class="tab" data-tab="tweet">✍️ Post</button>
+        <button class="tab" data-tab="liked">❤️ Liked</button>
+      </div>
+
+      <div id="tabContent">
+        <!-- Feed Videos -->
+        <div data-panel="feed">
+          <div class="content-grid" id="feedGrid">
+            <div class="video-card">
+              <div class="video-thumbnail">🎬</div>
+              <div class="video-info">
+                <div class="video-title">Funny Skit A</div>
+                <div class="video-meta">2.3K views • 2 days ago</div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">💃</div>
+              <div class="video-info">
+                <div class="video-title">Dance Clip B</div>
+                <div class="video-meta">1.9K views • 3 days ago</div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">📸</div>
+              <div class="video-info">
+                <div class="video-title">Vlog C</div>
+                <div class="video-meta">3.2K views • 1 day ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exclusive Videos -->
+        <div data-panel="exclusive" class="hidden">
+          <div class="content-grid" id="exclusiveGrid">
+            <div class="video-card">
+              <div class="video-thumbnail">🔒
+                <div class="video-badge">Premium</div>
+              </div>
+              <div class="video-info">
+                <div class="video-title">Behind the Scenes</div>
+                <div class="video-meta">800 paid views • ₦160 each</div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">🔒
+                <div class="video-badge">Premium</div>
+              </div>
+              <div class="video-info">
+                <div class="video-title">Exclusive Skit</div>
+                <div class="video-meta">600 paid views • ₦200 each</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shorts -->
+        <div data-panel="shorts" class="hidden">
+          <div class="content-grid" id="shortsGrid">
+            <div class="video-card">
+              <div class="video-thumbnail">⚡</div>
+              <div class="video-info">
+                <div class="video-title">Quick Dance</div>
+                <div class="video-meta">5.4K views • 30s</div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">😂</div>
+              <div class="video-info">
+                <div class="video-title">Laugh Clip</div>
+                <div class="video-meta">2.1K views • 15s</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post/Tweet -->
+        <div data-panel="tweet" class="hidden">
+          <div class="post" style="background:var(--bg-main)">
+            <div class="post-header">
+              <div class="post-avatar">U</div>
+              <div style="flex:1">
+                <textarea 
+                  class="form-textarea" 
+                  id="tweetText" 
+                  placeholder="What's happening? Share your thoughts..."
+                  style="margin-bottom:12px"
+                ></textarea>
+                <div style="display:flex;gap:12px;align-items:center">
+                  <label class="btn btn-secondary" style="padding:8px 16px;cursor:pointer">
+                    📎 Add Media
+                    <input type="file" id="tweetMedia" accept="image/*,video/*" style="display:none" />
+                  </label>
+                  <button class="btn btn-primary" id="postTweet">
+                    <span id="postTweetText">Post</span>
+                  </button>
+                </div>
+                <div id="mediaPreview" class="mt-2 hidden"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="tweetsFeed" class="feed">
+            <!-- Loaded posts appear here -->
+          </div>
+        </div>
+
+        <!-- Liked Videos -->
+        <div data-panel="liked" class="hidden">
+          <div class="content-grid" id="likedGrid">
+            <div class="video-card">
+              <div class="video-thumbnail">❤️</div>
+              <div class="video-info">
+                <div class="video-title">Favorite Clip</div>
+                <div class="video-meta">4.1K views</div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">😍</div>
+              <div class="video-info">
+                <div class="video-title">Top Laugh</div>
+                <div class="video-meta">3.8K views</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+      <h2 style="margin-bottom:24px">Upload Content</h2>
+      <form id="uploadForm">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input 
+            type="text" 
+            class="form-input" 
+            id="postTitle" 
+            placeholder="Give your content a catchy title"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Description (Optional)</label>
+          <textarea 
+            class="form-textarea" 
+            id="postDesc" 
+            placeholder="Tell viewers what this is about..."
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Media File</label>
+          <div class="form-file" id="fileDropZone">
+            <input 
+              type="file" 
+              id="postFile" 
+              accept="image/*,video/*" 
+              style="display:none"
+            />
+            <div id="fileLabel">
+              📁 Click to upload or drag & drop<br>
+              <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="form-checkbox">
+            <input type="checkbox" id="isPremium" />
+            <label for="isPremium" style="margin:0">🔒 Mark as Exclusive (Pay-to-Watch)</label>
+          </div>
+        </div>
+
+        <div class="form-group" id="priceGroup" style="display:none">
+          <label class="form-label">Price per View (₦)</label>
+          <input 
+            type="number" 
+            class="form-input" 
+            id="pricePerView" 
+            placeholder="e.g., 160"
+            min="50"
+            step="10"
+          />
+        </div>
+
+        <div style="display:flex;gap:12px">
+          <button type="submit" class="btn btn-primary" id="uploadBtn">
+            <span id="uploadBtnText">📤 Upload & Publish</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="clearForm">
+            Clear Form
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div style="font-size:18px;font-weight:700;margin-bottom:12px">POSE</div>
+      <p>Built for African creators</p>
+      <p style="margin-top:12px;font-size:14px">
+        <a href="#" style="margin:0 12px">About</a>
+        <a href="#" style="margin:0 12px">Creator Programs</a>
+        <a href="#" style="margin:0 12px">Support</a>
+        <a href="#" style="margin:0 12px">Terms</a>
+      </p>
+      <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">
+        Contact: hello@pose.app (demo)
+      </p>
+    </footer>
+  </div>
+
+  <!-- Firebase v9 (Modular) -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+
+    // ================== FIREBASE CONFIG ==================
+    const firebaseConfig = {
+      apiKey: "AIzaSyBqXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+      authDomain: "your-project.firebaseapp.com",
+      projectId: "your-project-id",
+      storageBucket: "your-project.appspot.com",
+      messagingSenderId: "123456789",
+      appId: "1:123456789:web:xxxxx"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // ================== UTILITY FUNCTIONS ==================
+    
+    // Toast notification system
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      
+      const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+      toast.innerHTML = `
+        <div style="font-size:20px">${icon}</div>
+        <div style="flex:1">${message}</div>
+      `;
+      
+      container.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Format file size
+    function formatFileSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    // Escape HTML
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Format timestamp
+    function formatTime(timestamp) {
+      if (!timestamp) return 'Just now';
+      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+      const now = new Date();
+      const diff = Math.floor((now - date) / 1000);
+      
+      if (diff < 60) return 'Just now';
+      if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+      if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+      return Math.floor(diff / 86400) + 'd ago';
+    }
+
+    // ================== MONETIZATION TAB CONTENT ==================
+    const monetContent = {
+      pay: `
+        <h3>💎 Pay-to-Watch (Exclusive Content)</h3>
+        <p style="color:var(--text-secondary);margin:16px 0">
+          Creators set a price for exclusive videos. Fans pay to unlock premium content. 
+          Instant micro-payments flow directly to your creator wallet once minimum views are reached.
+        </p>
+        <ul>
+          <li>Set custom price per view (minimum ₦50)</li>
+          <li>Instant payouts after threshold (e.g., 100 paid views)</li>
+          <li>Track paid views and revenue in real-time dashboard</li>
+          <li>70-85% revenue share goes directly to creators</li>
+          <li>No delays, no minimums for withdrawal</li>
+        </ul>
+      `,
+      smart: `
+        <h3>📺 Smart Ad Revenue</h3>
+        <p style="color:var(--text-secondary);margin:16px 0">
+          Non-intrusive ad units placed strategically under videos and in comment areas. 
+          Creators earn a generous share of ad revenue based on impressions and engagement.
+        </p>
+        <ul>
+          <li>Ad placement respects viewer experience</li>
+          <li>Real-time revenue share analytics in dashboard</li>
+          <li>Choose ad types and placements</li>
+          <li>Estimated ₦200 per 1,000 banner ad views</li>
+          <li>Higher engagement = higher earnings</li>
+        </ul>
+      `,
+      comment: `
+        <h3>💬 Comment Ad Boost</h3>
+        <p style="color:var(--text-secondary);margin:16px 0">
+          Ads tied to comment sections on feed posts. Posts with high engagement 
+          surface premium ad slots, maximizing creator earnings.
+        </p>
+        <ul>
+          <li>Earn from engaged audiences in comments</li>
+          <li>Premium slots for viral posts</li>
+          <li>Non-disruptive ad integration</li>
+          <li>Bonus earnings for trending content</li>
+        </ul>
+      `,
+      instant: `
+        <h3>⚡ Instant Video Revenue (Ad-Free)</h3>
+        <p style="color:var(--text-secondary);margin:16px 0">
+          A YouTube-like tab where creators publish longer-form content. 
+          Fans pay instantly for premium access; creators receive higher payouts with no in-video ads.
+        </p>
+        <ul>
+          <li>Publish long-form content (tutorials, vlogs, series)</li>
+          <li>Premium access model with instant payments</li>
+          <li>85% revenue share for instant video content</li>
+          <li>Ad-free viewing experience for premium subscribers</li>
+          <li>Build recurring revenue with series content</li>
+        </ul>
+      `,
+      banner: `
+        <h3>🎬 Banner Reward System</h3>
+        <p style="color:var(--text-secondary);margin:16px 0">
+          Short-form swipeable videos earn revenue via banner ads. 
+          Perfect for viral shorts and quick entertainment content.
+        </p>
+        <ul>
+          <li>Earn from short-form vertical videos (15-60s)</li>
+          <li>Per-1,000-view earnings (example: ₦200/1K views)</li>
+          <li>Minimal intrusion with banner placement</li>
+          <li>Viral potential = higher earnings</li>
+          <li>Perfect for TikTok-style content</li>
+        </ul>
+      `
+    };
+
+    // Set monetization content
+    function setMonetContent(key) {
+      document.getElementById('monetContent').innerHTML = monetContent[key] || '';
+    }
+
+    // Initialize monetization tabs
+    document.querySelectorAll('#monetTabs .monet-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('#monetTabs .monet-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        setMonetContent(tab.dataset.tab);
+      });
+    });
+    setMonetContent('pay');
+
+    // ================== MAIN TABS ==================
+    document.querySelectorAll('#mainTabs .tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('#mainTabs .tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        const tabName = tab.dataset.tab;
+        document.querySelectorAll('#tabContent [data-panel]').forEach(panel => {
+          if (panel.dataset.panel === tabName) {
+            panel.classList.remove('hidden');
+          } else {
+            panel.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ================== AUTH FLOW ==================
+    const demoCred = { email: 'demo@pose.app', password: 'demopass123' };
+    let currentUser = null;
+
+    // Update UI based on auth state
+    function updateAuthUI(user) {
+      const btnAuth = document.getElementById('btnAuth');
+      const userAvatar = document.getElementById('userAvatar');
+      const profileAvatar = document.getElementById('profileAvatar');
+      const profileName = document.getElementById('profileName');
+
+      if (user) {
+        currentUser = user;
+        btnAuth.classList.add('hidden');
+        userAvatar.classList.remove('hidden');
+        
+        const initial = user.email ? user.email[0].toUpperCase() : 'U';
+        userAvatar.textContent = initial;
+        profileAvatar.textContent = initial;
+        profileName.textContent = user.email || 'Creator';
+        
+        showToast('Welcome back, ' + (user.email || 'Creator') + '!', 'success');
+      } else {
+        currentUser = null;
+        btnAuth.classList.remove('hidden');
+        userAvatar.classList.add('hidden');
+      }
+    }
+
+    // Auth state observer
+    onAuthStateChanged(auth, (user) => {
+      updateAuthUI(user);
+      if (user) {
+        loadTweets();
+      }
+    });
+
+    // Demo login
+    document.getElementById('btnDemoLogin').addEventListener('click', async () => {
+      try {
+        await signInWithEmailAndPassword(auth, demoCred.email, demoCred.password);
+      } catch (err) {
+        if (err.code === 'auth/user-not-found') {
+          try {
+            await createUserWithEmailAndPassword(auth, demoCred.email, demoCred.password);
+            showToast('Demo account created successfully!', 'success');
+          } catch (e) {
+            showToast('Error: ' + e.message, 'error');
+          }
+        } else {
+          showToast('Error: ' + err.message, 'error');
+        }
+      }
+    });
+
+    // Clear demo / Sign out
+    document.getElementById('btnClearDemo').addEventListener('click', async () => {
+      try {
+        await signOut(auth);
+        showToast('Signed out successfully', 'info');
+      } catch (err) {
+        showToast('Error signing out: ' + err.message, 'error');
+      }
+    });
+
+    
+
+    // ================== FILE UPLOAD ==================
+    async function uploadFileToStorage(file, path) {
+      if (!file) return null;
+      
+      const storageRef = ref(storage, `${path}/${Date.now()}_${file.name}`);
+      await uploadBytes(storageRef, file);
+      const url = await getDownloadURL(storageRef);
+      return url;
+    }
+
+    // ================== UPLOAD FORM ==================
+    const isPremiumCheckbox = document.getElementById('isPremium');
+    const priceGroup = document.getElementById('priceGroup');
+
+    isPremiumCheckbox.addEventListener('change', () => {
+      priceGroup.style.display = isPremiumCheckbox.checked ? 'block' : 'none';
+    });
+
+    // File drop zone
+    const fileDropZone = document.getElementById('fileDropZone');
+    const postFile = document.getElementById('postFile');
+    const fileLabel = document.getElementById('fileLabel');
+
+    fileDropZone.addEventListener('click', () => postFile.click());
+
+    postFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        fileLabel.innerHTML = `
+          ✓ ${file.name}<br>
+          <small style="color:var(--text-secondary)">${formatFileSize(file.size)}</small>
+        `;
+      }
+    });
+
+    // Drag and drop
+    fileDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileDropZone.style.borderColor = 'var(--primary)';
+      fileDropZone.style.background = 'rgba(76,29,149,0.05)';
+    });
+
+    fileDropZone.addEventListener('dragleave', () => {
+      fileDropZone.style.borderColor = 'var(--border)';
+      fileDropZone.style.background = 'transparent';
+    });
+
+    fileDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileDropZone.style.borderColor = 'var(--border)';
+      fileDropZone.style.background = 'transparent';
+      
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        postFile.files = e.dataTransfer.files;
+        fileLabel.innerHTML = `
+          ✓ ${file.name}<br>
+          <small style="color:var(--text-secondary)">${formatFileSize(file.size)}</small>
+        `;
+      }
+    });
+
+    // Upload form submission
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!currentUser) {
+        showToast('Please sign in to upload content', 'error');
+        return;
+      }
+
+      const title = document.getElementById('postTitle').value.trim();
+      const desc = document.getElementById('postDesc').value.trim();
+      const file = postFile.files[0];
+      const isPremium = isPremiumCheckbox.checked;
+      const price = Number(document.getElementById('pricePerView').value) || 0;
+
+      if (!title) {
+        showToast('Please enter a title', 'error');
+        return;
+      }
+
+      if (!file) {
+        showToast('Please select a file to upload', 'error');
+        return;
+      }
+
+      if (isPremium && price < 50) {
+        showToast('Minimum price for exclusive content is ₦50', 'error');
+        return;
+      }
+
+      const uploadBtn = document.getElementById('uploadBtn');
+      const uploadBtnText = document.getElementById('uploadBtnText');
+      
+      uploadBtn.disabled = true;
+      uploadBtnText.innerHTML = '<span class="spinner"></span> Uploading...';
+
+      try {
+        const fileUrl = await uploadFileToStorage(file, 'posts');
+        
+        await addDoc(collection(db, 'posts'), {
+          owner: currentUser.uid,
+          ownerEmail: currentUser.email,
+          title,
+          description: desc,
+          fileUrl,
+          isPremium,
+          price,
+          createdAt: serverTimestamp(),
+          views: 0,
+          likes: 0
+        });
+
+        showToast('Content uploaded successfully!', 'success');
+        
+        // Reset form
+        document.getElementById('uploadForm').reset();
+        fileLabel.innerHTML = `
+          📁 Click to upload or drag & drop<br>
+          <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
+        `;
+        priceGroup.style.display = 'none';
+        
+      } catch (err) {
+        console.error(err);
+        showToast('Upload failed: ' + err.message, 'error');
+      } finally {
+        uploadBtn.disabled = false;
+        uploadBtnText.textContent = '📤 Upload & Publish';
+      }
+    });
+
+    // Clear form
+    document.getElementById('clearForm').addEventListener('click', () => {
+      document.getElementById('uploadForm').reset();
+      fileLabel.innerHTML = `
+        📁 Click to upload or drag & drop<br>
+        <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
+      `;
+      priceGroup.style.display = 'none';
+    });
+
+    // ================== TWEET/POST FUNCTIONALITY ==================
+    const tweetMedia = document.getElementById('tweetMedia');
+    const mediaPreview = document.getElementById('mediaPreview');
+
+    tweetMedia.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        mediaPreview.classList.remove('hidden');
+        const fileType = file.type.startsWith('image') ? 'Image' : 'Video';
+        mediaPreview.innerHTML = `
+          <div style="padding:12px;background:var(--bg-card);border-radius:var(--radius-sm);display:flex;align-items:center;gap:12px">
+            <span>${fileType}: ${file.name}</span>
+            <button onclick="this.parentElement.parentElement.classList.add('hidden');document.getElementById('tweetMedia').value=''" 
+                    style="margin-left:auto;background:transparent;border:none;cursor:pointer;font-size:18px">✕</button>
+          </div>
+        `;
+      }
+    });
+
+    // Post tweet
+    document.getElementById('postTweet').addEventListener('click', async () => {
+      if (!currentUser) {
+        showToast('Please sign in to post', 'error');
+        return;
+      }
+
+      const text = document.getElementById('tweetText').value.trim();
+      const file = tweetMedia.files[0];
+
+      if (!text && !file) {
+        showToast('Please write something or attach media', 'error');
+        return;
+      }
+
+      const postTweetBtn = document.getElementById('postTweet');
+      const postTweetText = document.getElementById('postTweetText');
+      
+      postTweetBtn.disabled = true;
+      postTweetText.innerHTML = '<span class="spinner"></span>';
+
+      try {
+        let mediaUrl = null;
+        if (file) {
+          mediaUrl = await uploadFileToStorage(file, 'tweets');
+        }
+
+        await addDoc(collection(db, 'tweets'), {
+          owner: currentUser.uid,
+          ownerEmail: currentUser.email,
+          text,
+          mediaUrl,
+          createdAt: serverTimestamp(),
+          likes: 0,
+          comments: 0,
+          retweets: 0
+        });
+
+        showToast('Posted successfully!', 'success');
+        document.getElementById('tweetText').value = '';
+        tweetMedia.value = '';
+        mediaPreview.classList.add('hidden');
+        
+        loadTweets();
+        
+      } catch (err) {
+        console.error(err);
+        showToast('Post failed: ' + err.message, 'error');
+      } finally {
+        postTweetBtn.disabled = false;
+        postTweetText.textContent = 'Post';
+      }
+    });
+
+    // Load tweets
+    async function loadTweets() {
+      const container = document.getElementById('tweetsFeed');
+      container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">Loading posts...</div>';
+
+      try {
+        const q = query(collection(db, 'tweets'), orderBy('createdAt', 'desc'), limit(20));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+          container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">No posts yet. Be the first to post!</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          const postEl = document.createElement('div');
+          postEl.className = 'post';
+
+          const initial = data.ownerEmail ? data.ownerEmail[0].toUpperCase() : 'U';
+          const name = data.ownerEmail ? data.ownerEmail.split('@')[0] : 'User';
+
+          postEl.innerHTML = `
+            <div class="post-header">
+              <div class="post-avatar">${initial}</div>
+              <div class="post-author">
+                <div class="post-author-name">${escapeHtml(name)}</div>
+                <div class="post-time">${formatTime(data.createdAt)}</div>
+              </div>
+            </div>
+            ${data.text ? `<div class="post-content">${escapeHtml(data.text)}</div>` : ''}
+            ${data.mediaUrl ? `<div class="post-media"><img src="${data.mediaUrl}" alt="Post media" /></div>` : ''}
+            <div class="post-actions">
+              <button class="post-action">❤️ ${data.likes || 0}</button>
+              <button class="post-action">💬 ${data.comments || 0}</button>
+              <button class="post-action">🔁 ${data.retweets || 0}</button>
+            </div>
+          `;
+
+          container.appendChild(postEl);
+        });
+
+      } catch (err) {
+        console.error(err);
+        container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">Error loading posts</div>';
+      }
+    }
+
+    // Wait until the page loads
+  document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("btnGetStarted");
+    if (btn) {
+      btn.addEventListener("click", function() {
+        window.open("https://poseapp.vercel.app/", "_blank");
+      });
+    }
+  });
+    document.getElementById('btnWatchDemo').addEventListener('click', () => {
+      showToast('Demo video feature coming soon!', 'info');
+    });
+
+    document.getElementById('btnEditProfile').addEventListener('click', () => {
+      showToast('Profile editing feature coming soon!', 'info');
+    });
+
+    document.getElementById('btnWallet').addEventListener('click', () => {
+      showToast('Wallet feature coming soon!', 'info');
+    });
+
+    // Initialize
+    console.log('🎬 Pose Platform Initialized');
+    showToast('Welcome to Pose! Sign in to get started.', 'info');
+  </script>
+</body>
+</html>
