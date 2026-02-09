@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pose — Where Every View Pays Instantly</title>
-  <meta name="description" content="Pose: a creator-first platform for African creators. Multiple monetization systems, instant payouts, and clean UX." />
+  <meta name="description" content="Pose: a creator-first platform for global creators. Multiple monetization systems, instant payouts, and clean UX." />
   <style>
     /* ====== CSS Variables for Theme ====== */
     :root {
@@ -24,6 +24,8 @@
       --radius-md: 12px;
       --radius-lg: 16px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --coin-gold: #FFD700;
+      --coin-gold-light: #FFF4B3;
     }
 
     /* ====== Reset & Base ====== */
@@ -231,6 +233,21 @@
       letter-spacing:0.5px;
     }
 
+    /* ====== Coin Stats Box ====== */
+    .coin-stat-box{
+      background:linear-gradient(135deg,var(--coin-gold-light),var(--coin-gold));
+      padding:20px;
+      border-radius:var(--radius-md);
+      text-align:center;
+      border:2px solid var(--coin-gold);
+    }
+    .coin-stat-value{
+      font-size:28px;
+      font-weight:800;
+      color:#8B4513;
+      margin-bottom:4px;
+    }
+
     /* ====== Feature Cards ====== */
     .features{
       display:grid;
@@ -272,72 +289,191 @@
       line-height:1.6;
     }
 
-    /* ====== Monetization Section ====== */
-    .monet-section{
-      background:var(--bg-card);
+    /* ====== Pose Coin Section ====== */
+    .coin-section{
+      background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,244,179,0.2));
       padding:48px;
       border-radius:var(--radius-lg);
       margin:60px 0;
       box-shadow:var(--shadow-md);
+      border:3px solid var(--coin-gold);
     }
-    .section-header{
+    .coin-header{
       text-align:center;
-      max-width:700px;
-      margin:0 auto 48px;
+      margin-bottom:40px;
     }
-    .section-header h2{
+    .coin-header h2{
       font-size:36px;
       margin-bottom:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
     }
-   .monet-tabs {
-  display: flex;
-  justify-content: space-between; /* Spread evenly */
-  flex-wrap: nowrap;
-  gap: 8px;
-  margin-bottom: 32px;
-  overflow: hidden;
-}
-
-.monet-tab {
-  flex: 1;                  /* ✅ Makes each tab auto-resize equally */
-  text-align: center;
-  padding: 12px;
-  border-radius: var(--radius-md);
-  background: var(--bg-main);
-  border: 2px solid transparent;
-  font-weight: 600;
-  transition: var(--transition);
-  white-space: nowrap;
-}
-
-.monet-tab:hover {
-  border-color: var(--primary);
-}
-
-.monet-tab.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-    .monet-content{
-      padding:32px;
-      background:var(--bg-main);
+    .coin-icon-large{
+      font-size:48px;
+      animation:coinFloat 3s ease-in-out infinite;
+    }
+    @keyframes coinFloat{
+      0%, 100%{transform:translateY(0px)}
+      50%{transform:translateY(-10px)}
+    }
+    .coin-features{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+      gap:24px;
+      margin-top:32px;
+    }
+    .coin-feature{
+      background:var(--bg-card);
+      padding:24px;
       border-radius:var(--radius-md);
-      min-height:200px;
+      box-shadow:var(--shadow-sm);
     }
-    .monet-content h3{
+    .coin-feature h4{
+      font-size:18px;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .coin-rate{
+      background:var(--bg-card);
+      padding:32px;
+      border-radius:var(--radius-md);
+      text-align:center;
+      margin:32px 0;
+      box-shadow:var(--shadow-md);
+    }
+    .coin-rate h3{
       font-size:24px;
       margin-bottom:16px;
+    }
+    .coin-conversion{
+      font-size:48px;
+      font-weight:800;
+      color:var(--coin-gold);
+      text-shadow:2px 2px 4px rgba(0,0,0,0.1);
+      margin:20px 0;
+    }
+    .coin-badge{
+      display:inline-block;
+      background:linear-gradient(135deg,var(--coin-gold),#FFB700);
+      color:#8B4513;
+      padding:8px 16px;
+      border-radius:20px;
+      font-weight:600;
+      font-size:14px;
+      margin-top:12px;
+    }
+
+    /* ====== Learn More Section ====== */
+    .learn-more-section{
+      background:var(--bg-card);
+      padding:60px 48px;
+      border-radius:var(--radius-lg);
+      margin:60px 0;
+      box-shadow:var(--shadow-md);
+    }
+    .learn-more-section h2{
+      font-size:36px;
+      margin-bottom:24px;
       color:var(--primary);
+      text-align:center;
     }
-    .monet-content ul{
-      margin:16px 0;
-      padding-left:24px;
+    .learn-more-section h3{
+      font-size:28px;
+      margin:40px 0 16px;
+      color:var(--primary-dark);
     }
-    .monet-content li{
-      margin:8px 0;
+    .learn-more-section h4{
+      font-size:20px;
+      margin:24px 0 12px;
+      color:var(--text-primary);
+    }
+    .learn-more-section p{
       color:var(--text-secondary);
+      line-height:1.8;
+      margin-bottom:16px;
+    }
+    .learn-more-section ul{
+      margin:16px 0 24px 24px;
+      color:var(--text-secondary);
+    }
+    .learn-more-section ol{
+      margin:16px 0 24px 24px;
+      color:var(--text-secondary);
+    }
+    .learn-more-section li{
+      margin:8px 0;
+      line-height:1.6;
+    }
+    .learn-more-section strong{
+      color:var(--text-primary);
+      font-weight:600;
+    }
+    .comparison-table{
+      width:100%;
+      margin:32px 0;
+      border-collapse:collapse;
+      background:var(--bg-main);
+      border-radius:var(--radius-md);
+      overflow:hidden;
+    }
+    .comparison-table th{
+      background:var(--primary);
+      color:white;
+      padding:16px;
+      text-align:left;
+      font-weight:600;
+    }
+    .comparison-table td{
+      padding:16px;
+      border-bottom:1px solid var(--border);
+    }
+    .comparison-table tr:last-child td{
+      border-bottom:none;
+    }
+    .comparison-table tr:nth-child(even){
+      background:rgba(76,29,149,0.02);
+    }
+    .pricing-table{
+      width:100%;
+      margin:24px 0;
+      border-collapse:collapse;
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius-md);
+      overflow:hidden;
+    }
+    .pricing-table th{
+      background:var(--primary-dark);
+      color:white;
+      padding:12px 16px;
+      text-align:left;
+    }
+    .pricing-table td{
+      padding:12px 16px;
+      border-bottom:1px solid var(--border);
+    }
+    .highlight-box{
+      background:linear-gradient(135deg,rgba(76,29,149,0.1),rgba(109,40,217,0.1));
+      padding:24px;
+      border-radius:var(--radius-md);
+      border-left:4px solid var(--primary);
+      margin:24px 0;
+    }
+    .model-section{
+      background:var(--bg-main);
+      padding:32px;
+      border-radius:var(--radius-lg);
+      margin:32px 0;
+      border:2px solid var(--border);
+    }
+    .divider{
+      height:2px;
+      background:linear-gradient(90deg,transparent,var(--border),transparent);
+      margin:48px 0;
     }
 
     /* ====== Profile Section ====== */
@@ -570,69 +706,6 @@
       color:var(--primary);
     }
 
-    /* ====== Form Styles ====== */
-    .form-group{
-      margin-bottom:20px;
-    }
-    .form-label{
-      display:block;
-      font-weight:600;
-      margin-bottom:8px;
-      font-size:14px;
-    }
-    .form-input,
-    .form-textarea{
-      width:100%;
-      padding:12px 16px;
-      border:2px solid var(--border);
-      border-radius:var(--radius-md);
-      font-size:15px;
-      transition:var(--transition);
-      background:var(--bg-card);
-    }
-    .form-input:focus,
-    .form-textarea:focus{
-      outline:none;
-      border-color:var(--primary);
-      box-shadow:0 0 0 3px rgba(76,29,149,0.1);
-    }
-    .form-textarea{
-      resize:vertical;
-      min-height:120px;
-      font-family:inherit;
-    }
-    .form-file{
-      padding:12px;
-      border:2px dashed var(--border);
-      border-radius:var(--radius-md);
-      text-align:center;
-      cursor:pointer;
-      transition:var(--transition);
-    }
-    .form-file:hover{
-      border-color:var(--primary);
-      background:rgba(76,29,149,0.02);
-    }
-    .form-checkbox{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .form-checkbox input{
-      width:20px;
-      height:20px;
-      cursor:pointer;
-    }
-
-    /* ====== Upload Section ====== */
-    .upload-section{
-      background:var(--bg-card);
-      padding:32px;
-      border-radius:var(--radius-lg);
-      box-shadow:var(--shadow-md);
-      margin:40px 0;
-    }
-
     /* ====== Footer ====== */
     footer{
       background:var(--bg-card);
@@ -648,6 +721,8 @@
       .container{padding:20px}
       header.hero{grid-template-columns:1fr;gap:32px}
       .content-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+      .learn-more-section{padding:40px 32px}
+      .coin-section{padding:40px 32px}
     }
 
     @media(max-width:768px){
@@ -656,9 +731,6 @@
       .cta-row{flex-direction:column}
       .btn{width:100%;justify-content:center}
       .features{grid-template-columns:1fr}
-      .monet-section{padding:24px}
-      .section-header h2{font-size:28px}
-      .monet-tabs{flex-wrap:nowrap;overflow-x:auto}
       .profile-header{flex-direction:column}
       .profile-avatar{width:100px;height:100px;font-size:28px}
       .profile-actions{width:100%;flex-direction:column}
@@ -666,6 +738,14 @@
       .content-grid{grid-template-columns:repeat(2,1fr);gap:12px}
       .tabs{gap:4px}
       .tab{padding:10px 16px;font-size:14px}
+      .learn-more-section{padding:32px 24px}
+      .learn-more-section h2{font-size:28px}
+      .learn-more-section h3{font-size:24px}
+      .comparison-table{font-size:14px}
+      .comparison-table th,.comparison-table td{padding:12px 8px}
+      .coin-section{padding:32px 24px}
+      .coin-header h2{font-size:28px;flex-direction:column}
+      .coin-features{grid-template-columns:1fr}
     }
 
     @media(max-width:480px){
@@ -673,10 +753,16 @@
       .logo{font-size:20px}
       .nav-content{padding:12px 16px}
       .container{padding:16px}
-      .monet-content{padding:20px}
       .content-grid{grid-template-columns:1fr}
       .stats-preview{grid-template-columns:1fr}
       .hero-card{padding:24px}
+      .learn-more-section{padding:24px 16px}
+      .learn-more-section h2{font-size:24px}
+      .learn-more-section h3{font-size:20px}
+      .comparison-table{font-size:12px}
+      .comparison-table th,.comparison-table td{padding:8px 6px}
+      .coin-section{padding:24px 16px}
+      .coin-conversion{font-size:36px}
     }
 
     /* ====== Utility Classes ====== */
@@ -688,93 +774,6 @@
     .mb-1{margin-bottom:8px}
     .mb-2{margin-bottom:16px}
     .mb-3{margin-bottom:24px}
-    
-    
-    /* ====== Pose — Features Section CSS ====== */
-#features {
-  padding: 4rem 1.5rem;
-  background: transparent;            /* change if you want a subtle tint */
-  color: #111827;                     /* dark text */
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
-
-/* Section header */
-#features > h3 {
-  font-size: 2rem;                    /* 32px */
-  font-weight: 800;
-  text-align: center;
-  margin-bottom: 2.5rem;
-  line-height: 1.05;
-  color: #0f172a;
-}
-
-/* grid container */
-#features .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;                        /* 20px */
-  align-items: start;
-}
-
-/* single feature card (each child div) */
-#features .grid > div {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1.25rem;                    /* 20px */
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-  border: 1px solid rgba(15, 23, 42, 0.03);
-}
-
-/* hover / focus state for interactive feel */
-#features .grid > div:hover,
-#features .grid > div:focus-within {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.10);
-}
-
-/* feature title */
-#features h4 {
-  font-size: 1.125rem;                /* 18px */
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #111827;
-}
-
-/* feature paragraph */
-#features p {
-  color: #374151;                      /* slightly muted dark */
-  font-size: 0.97rem;                  /* ~15.5px */
-  line-height: 1.6;
-}
-
-/* emphasize strong inside the feature text */
-#features p strong {
-  color: #111827;
-  font-weight: 700;
-}
-
-/* Responsive: single column on narrow screens */
-@media (max-width: 900px) {
-  #features .grid {
-    grid-template-columns: 1fr;
-  }
-
-  #features > h3 {
-    font-size: 1.75rem;                /* slightly smaller on small screens */
-  }
-}
-
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  #features .grid > div,
-  #features .grid > div:hover,
-  #features .grid > div:focus-within {
-    transition: none;
-    transform: none;
-  }
-}
-
   </style>
 </head>
 <body>
@@ -788,11 +787,12 @@
       <div class="logo">POSE</div>
       <div class="nav-links">
         <a href="#features">Features</a>
-        <a href="#monetization">Monetization</a>
+        <a href="#pose-coin">Pose Coin</a>
+        <a href="#learn-more">Learn More</a>
         <a href="#profile">Profile</a>
       </div>
       <div class="user-menu">
-        
+        <button class="btn btn-primary hidden" id="btnAuth">Sign In</button>
         <div class="user-avatar hidden" id="userAvatar">U</div>
       </div>
     </div>
@@ -803,7 +803,7 @@
     <header class="hero">
       <div>
         <h1>Where every view pays instantly</h1>
-        <p class="lead">Built for Nigerian & African creators — multiple monetization systems, instant payouts, and creator-first control.</p>
+        <p class="lead">Built for global creators — multiple monetization systems, instant payouts with Pose Coin 🪙, and creator-first control.</p>
         <div class="cta-row">
           <button class="btn btn-primary" id="btnGetStarted">
             🚀 Become a Creator
@@ -816,7 +816,7 @@
 
       <div class="hero-card">
         <h3>Quick Demo Access</h3>
-        <p style="color:var(--text-secondary);margin-bottom:20px">Sign up, upload content, and try Pay-to-Watch — payments flow directly to your wallet.</p>
+        <p style="color:var(--text-secondary);margin-bottom:20px">Sign up, experience Pose Coin payments, and explore cashback rewards.</p>
         
         <button class="btn btn-primary" id="btnDemoLogin" style="width:100%;margin-bottom:12px">
           Try Demo Account
@@ -826,13 +826,13 @@
         </button>
 
         <div class="stats-preview">
-          <div class="stat-box">
-            <div class="stat-value">₦50</div>
-            <div class="stat-label">Per Paid View</div>
+          <div class="coin-stat-box">
+            <div class="coin-stat-value">🪙 1</div>
+            <div class="stat-label">= ₦25</div>
           </div>
           <div class="stat-box">
-            <div class="stat-value">₦200</div>
-            <div class="stat-label">Per 1K Ad Views</div>
+            <div class="stat-value">5%</div>
+            <div class="stat-label">Cashback</div>
           </div>
         </div>
       </div>
@@ -841,9 +841,19 @@
     <!-- Feature Cards -->
     <section class="features" id="features">
       <div class="feature-card">
+        <div class="feature-icon">🪙</div>
+        <h3>Pose Coin System</h3>
+        <p>Buy Pose Coins at ₦25 per coin and use them across the platform for seamless payments and exclusive content access.</p>
+      </div>
+      <div class="feature-card">
         <div class="feature-icon">💰</div>
-        <h3>Instant Pay-to-Watch</h3>
-        <p>Creators set prices for exclusive clips — get paid from 100+ views with instant micro-payments to your wallet.</p>
+        <h3>Cashback Rewards</h3>
+        <p>Earn cashback on every purchase! Get rewarded for your activity and watch your savings grow automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎟️</div>
+        <h3>Exclusive Coupons</h3>
+        <p>Access special discount coupons and promotional offers. Save more on premium content and subscriptions.</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">📊</div>
@@ -851,51 +861,496 @@
         <p>Non-intrusive ad placements with ad-share revenue for creators. Your content, your earnings.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🎯</div>
-        <h3>70–85% Payouts</h3>
-        <p>Industry-leading revenue share for creators — transparent, instant, and always in your control.</p>
+        <div class="feature-icon">🎵</div>
+        <h3>Music Platform</h3>
+        <p>Upload songs and earn from viral growth with our multiplier model — higher engagement means higher earnings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Digital Books</h3>
+        <p>Publish and monetize books with flexible pricing — readers pay only for what they want to read.</p>
       </div>
     </section>
-<section id="features" class="py-16 px-6 max-w-5xl mx-auto">
-    <h3 class="text-3xl font-bold text-center mb-10">Why Creators Love Pose</h3>
-    <div class="grid md:grid-cols-2 gap-10">
-      <div>
-        <h4 class="font-bold text-xl mb-2">Instant Pay-to-Watch</h4>
-        <p>Creators can set prices for exclusive videos and earn from as little as 100 views — no more waiting for payout thresholds.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-xl mb-2">Smart Ad Revenue</h4>
-        <p>Ads are placed neatly, never disturbing content — creators earn from comment section engagement or banner ads.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-xl mb-2">Exclusive Without Ads</h4>
-        <p>We’re creating a platform where users can enjoy premium, exclusive videos completely <strong>ad-free</strong>. Your money goes directly to the creators — not to ads or corporate middlemen.</p>
-      </div>
-      <div>
-        <h4 class="font-bold text-xl mb-2">Flexible Payment System</h4>
-        <p>Pose allows users to use their funds to watch content freely, without being limited by monthly subscriptions. You only pay for what you love — on your terms.</p>
-      </div>
-    </div>
-  </section>
-    <!-- Monetization Section -->
-    <section class="monet-section" id="monetization">
-      <div class="section-header">
-        <h2>Full Monetization Systems</h2>
-        <p style="color:var(--text-secondary)">Flexible, tiered revenue systems so creators can choose what works best for their content and audience.</p>
+
+    <!-- Pose Coin Section -->
+    <section class="coin-section" id="pose-coin">
+      <div class="coin-header">
+        <h2>
+          <span class="coin-icon-large">🪙</span>
+          Introducing Pose Coin
+        </h2>
+        <p style="color:var(--text-secondary);font-size:18px;max-width:700px;margin:0 auto">
+          Your universal currency for seamless transactions, exclusive content, and rewarding experiences on Pose.
+        </p>
       </div>
 
-      <div class="monet-tabs" id="monetTabs">
-        <button class="monet-tab active" data-tab="pay">💎 Pay-to-Watch</button>
-        <button class="monet-tab" data-tab="smart">📺 Smart Ads</button>
-        <button class="monet-tab" data-tab="comment">💬 Comment Ads</button>
-        <button class="monet-tab" data-tab="instant">⚡ Instant Video</button>
-        <button class="monet-tab" data-tab="banner">🎬 Banner Rewards</button>
+      <div class="coin-rate">
+        <h3>Exchange Rate</h3>
+        <div class="coin-conversion">
+          🪙 1 Pose Coin = ₦25
+        </div>
+        <p style="color:var(--text-secondary);margin-top:12px">
+          Simple, transparent pricing with no hidden fees
+        </p>
+        <div class="coin-badge">Fixed Rate • No Fluctuation</div>
+      </div>
+
+      <div class="coin-features">
+        <div class="coin-feature">
+          <h4>💳 Easy Top-Up</h4>
+          <p style="color:var(--text-secondary)">
+            Load your wallet with Pose Coins instantly using bank transfer, cards, or mobile money. Quick, secure, and hassle-free.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Multiple payment methods</li>
+            <li>Instant wallet credit</li>
+            <li>Secure transactions</li>
+          </ul>
+        </div>
+
+        <div class="coin-feature">
+          <h4>💰 Cashback Policy</h4>
+          <p style="color:var(--text-secondary)">
+            Earn cashback on every transaction! The more you engage, the more you save. Cashback is automatically credited to your wallet.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Up to 5% cashback on purchases</li>
+            <li>Automatic wallet credit</li>
+            <li>No expiration dates</li>
+            <li>Use cashback for future purchases</li>
+          </ul>
+        </div>
+
+        <div class="coin-feature">
+          <h4>🎟️ Exclusive Coupons</h4>
+          <p style="color:var(--text-secondary)">
+            Get access to exclusive discount coupons and promotional codes. Save on premium content, subscriptions, and special events.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Seasonal discount codes</li>
+            <li>Creator-specific promotions</li>
+            <li>Bundle deals and offers</li>
+            <li>First-time user bonuses</li>
+          </ul>
+        </div>
+
+        <div class="coin-feature">
+          <h4>⚡ Universal Usage</h4>
+          <p style="color:var(--text-secondary)">
+            Use Pose Coins everywhere on the platform — pay-per-view videos, music streaming, book purchases, and exclusive content.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Video and movie access</li>
+            <li>Music and audio content</li>
+            <li>Digital book purchases</li>
+            <li>Premium subscriptions</li>
+          </ul>
+        </div>
+
+        <div class="coin-feature">
+          <h4>📊 Transparent Tracking</h4>
+          <p style="color:var(--text-secondary)">
+            Monitor your Pose Coin balance, transaction history, cashback earnings, and coupon usage all in one dashboard.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Real-time balance updates</li>
+            <li>Complete transaction logs</li>
+            <li>Cashback history</li>
+            <li>Active coupons overview</li>
+          </ul>
+        </div>
+
+        <div class="coin-feature">
+          <h4>🎁 Rewards & Bonuses</h4>
+          <p style="color:var(--text-secondary)">
+            Participate in platform activities to earn bonus Pose Coins. Referrals, milestones, and loyalty programs unlock extra rewards.
+          </p>
+          <ul style="margin-top:12px;color:var(--text-secondary);font-size:14px">
+            <li>Referral bonuses</li>
+            <li>Milestone rewards</li>
+            <li>Loyalty program benefits</li>
+            <li>Special event prizes</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top:40px;border-left-color:var(--coin-gold)">
+        <h4 style="margin:0 0 12px 0;color:var(--text-primary)">Why Pose Coin?</h4>
+        <p style="margin-bottom:12px">
+          Pose Coin simplifies payments, rewards your engagement, and gives you more value for your money. No subscription pressure — pay only for what you love, earn cashback, and enjoy exclusive discounts.
+        </p>
+        <p style="margin-bottom:0;font-weight:600;color:var(--text-primary)">
+          Fair pricing. Instant transactions. Maximum rewards. 🪙
+        </p>
+      </div>
+    </section>
+
+    <!-- Learn More Section -->
+    <section class="learn-more-section" id="learn-more">
+      <h2>Learn More About Pose</h2>
+      
+      <div class="highlight-box">
+        <h3 style="margin-top:0">About Pose</h3>
+        <p>Pose is a global creator-first platform built to help people earn fairly from their content. We are building Pose to give musicians, filmmakers, businesses, and creators better ways to make money through pay-as-you-watch, viral growth, downloads, and ads. Our goal is to remove limits, reduce barriers, and let creators get paid instantly while giving users flexible, affordable access to high-quality content worldwide.</p>
+        <p style="margin-bottom:0">Pose is designed for creators, artists, businesses, and everyday users who want freedom, transparency, and real value from digital content.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>The Pose App Structure (Main Tabs)</h3>
+      <p>Pose is organized into three main tabs to make content discovery simple and effective.</p>
+
+      <div class="model-section">
+        <h4>1. For You Tab (Short Videos)</h4>
+        <p>The <strong>For You</strong> tab is where short-form content lives.</p>
+        <ul>
+          <li>Shows short videos and viral clips</li>
+          <li>Supports music, comedy, tutorials, lifestyle, and trends</li>
+          <li>Optimized for discovery and engagement</li>
+          <li>Includes banner ads and comment-section ads</li>
+          <li>Supports viral growth through sharing and interaction</li>
+        </ul>
+        <p style="margin-bottom:0"><strong>This tab helps creators grow quickly and reach new audiences.</strong></p>
+      </div>
+
+      <div class="model-section">
+        <h4>2. Tweet Tab (News, Opinions, and Discussions)</h4>
+        <p>The <strong>Tweet</strong> tab is for text-based and mixed-media content.</p>
+        <ul>
+          <li>Users can post news, opinions, suggestions, and discussions</li>
+          <li>Supports text, images, videos, and links</li>
+          <li>Comment-section ads and promoted posts</li>
+          <li>Allows creators and users to build influence through ideas and conversations</li>
+        </ul>
+        <p style="margin-bottom:0"><strong>This tab makes Pose a space for information, expression, and community engagement.</strong></p>
+      </div>
+
+      <div class="model-section">
+        <h4>3. Pose Tab (Long Videos, Movies, and Books)</h4>
+        <p>The <strong>Pose</strong> tab is for long-form and premium content.</p>
+        <ul>
+          <li>Shows videos from 2 minutes upward</li>
+          <li>Includes free and paid videos</li>
+          <li>Supports movies, series, documentaries, and tutorials</li>
+          <li>Contains a digital books section</li>
+          <li>Users can read books for free or pay to access premium content</li>
+        </ul>
+        <p style="margin-bottom:0"><strong>This tab is where serious content creators, filmmakers, and educators earn long-term income.</strong></p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Additional Feature: Pose Music</h3>
+      <div class="highlight-box">
+        <p>Pose Music allows users to become artists and music creators.</p>
+        <ul>
+          <li>Users can create an artist account</li>
+          <li>Upload songs and sounds</li>
+          <li>Monetize through viral interaction and platform models</li>
+          <li>Track earnings and performance</li>
+          <li>Receive payouts instantly in Pose Coins</li>
+        </ul>
+        <p style="margin-bottom:0"><strong>Pose Music supports upcoming and established artists worldwide.</strong></p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Pose Wallet & Coin System</h3>
+      <p>All payments and earnings on Pose are managed through the Pose Coin wallet system.</p>
+      <ul>
+        <li>Users top up their wallet with Pose Coins (🪙 1 = ₦25)</li>
+        <li>Payments are deducted automatically in Pose Coins</li>
+        <li>Creators receive earnings instantly in Pose Coins</li>
+        <li>No minimum withdrawal threshold</li>
+        <li>Transparent transaction history</li>
+        <li>Cashback rewards credited automatically</li>
+        <li>Redeem coupons for discounts</li>
+      </ul>
+      <p><strong>The Pose Coin system makes payments simple, fast, rewarding, and reliable.</strong></p>
+
+      <div class="divider"></div>
+
+      <h3>Pose Revenue & Earning Models</h3>
+      <p>Pose uses multiple earning models to support different types of creators and businesses.</p>
+
+      <div class="model-section">
+        <h4>Model 1 – Music and Sound Creators (Viral Multiplier Model)</h4>
+        <p>This model is designed for musicians and sound creators.</p>
         
+        <h4>How It Works</h4>
+        <ol>
+          <li>Creator uploads a song or sound</li>
+          <li>Users interact with the sound (watching, looping, sharing, remixing)</li>
+          <li>Each user generates multiple views</li>
+          <li>Views are tracked per user</li>
+          <li>Viral multiplier increases total engagement</li>
+        </ol>
+
+        <h4>Payout System</h4>
+        <ul>
+          <li>₦15 per 1,000 views per user (paid in Pose Coins)</li>
+          <li>Earnings from all users are combined</li>
+          <li>Creator receives total payout in Pose Coins</li>
+          <li>Instant withdrawal available</li>
+        </ul>
+
+        <h4>Example</h4>
+        <ul>
+          <li>10,000 users use a sound</li>
+          <li>Each user generates multiple views</li>
+          <li>Total views are calculated internally</li>
+          <li>Artist can earn very high payouts depending on virality</li>
+        </ul>
+
+        <h4>Benefits</h4>
+        <ul>
+          <li>Encourages sharing and creativity</li>
+          <li>Rewards viral growth</li>
+          <li>Higher earning potential than traditional streaming</li>
+          <li>Transparent calculation</li>
+        </ul>
       </div>
 
-      <div class="monet-content" id="monetContent">
-        <!-- Content loaded by JS -->
+      <div class="model-section">
+        <h4>Model 2 – Video and Movie Creators (Pay-As-You-Watch Model)</h4>
+        <p>This model is for filmmakers, educators, and long-form video creators.</p>
+
+        <h4>How It Works</h4>
+        <ol>
+          <li>Creator uploads a video (1:30 minutes to 6 hours)</li>
+          <li>Creator sets price range in Pose Coins</li>
+          <li>Users pay with Pose Coins for what they watch</li>
+          <li>Wallet balance is deducted automatically</li>
+          <li>Creator receives earnings immediately in Pose Coins</li>
+        </ol>
+
+        <h4>Pricing Range (in Pose Coins)</h4>
+        <ul>
+          <li>Short videos: 🪙 1 – 8 coins (₦25 – ₦200)</li>
+          <li>Medium videos: 🪙 8 – 20 coins (₦200 – ₦500)</li>
+          <li>Long videos / movies: 🪙 20 – 40 coins (₦500 – ₦1,000)</li>
+        </ul>
+
+        <h4>Revenue Split</h4>
+        <ul>
+          <li>Creator: 75%</li>
+          <li>Pose: 25%</li>
+        </ul>
+
+        <h4>Download / Ownership Feature</h4>
+        <p>Users can download videos like buying a digital movie disk.</p>
+        <ul>
+          <li>Flat price: 🪙 4 coins (₦100)</li>
+          <li>User owns the content offline</li>
+          <li>Creator receives 90%</li>
+          <li>Pose receives 10%</li>
+        </ul>
+
+        <h4>Benefits</h4>
+        <ul>
+          <li>Users pay only for what they watch</li>
+          <li>No monthly subscription pressure</li>
+          <li>Flexible pricing with Pose Coins</li>
+          <li>Strong creator earnings</li>
+          <li>Offline viewing support</li>
+          <li>Cashback on every purchase</li>
+        </ul>
       </div>
+
+      <div class="model-section">
+        <h4>Model 3 – Business Ads and Promotion Model</h4>
+        <p>This model is designed for businesses, brands, and influencers.</p>
+
+        <h4>How It Works</h4>
+        <ol>
+          <li>Business uploads promotional content</li>
+          <li>Pays for promotion (can use Pose Coins)</li>
+          <li>Pose places ads and boosts the content</li>
+          <li>Viral multiplier increases reach</li>
+          <li>Creator/business is paid after reaching view targets</li>
+        </ol>
+
+        <h4>Promotion Stages</h4>
+        <table class="pricing-table">
+          <thead>
+            <tr>
+              <th>Stage</th>
+              <th>Monthly Fee</th>
+              <th>Target Reach</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stage 1</td>
+              <td>₦50,000 (🪙 2,000 coins)</td>
+              <td>Up to 100,000 views</td>
+            </tr>
+            <tr>
+              <td>Stage 2</td>
+              <td>₦100,000 (🪙 4,000 coins)</td>
+              <td>Up to 250,000 views</td>
+            </tr>
+            <tr>
+              <td>Stage 3</td>
+              <td>₦250,000 (🪙 10,000 coins)</td>
+              <td>Up to 1,000,000 views</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4>Key Features</h4>
+        <ul>
+          <li>Performance-based promotion</li>
+          <li>High engagement targeting</li>
+          <li>Better reach per Naira</li>
+          <li>Creator participation in ad revenue</li>
+        </ul>
+
+        <h4>Benefits</h4>
+        <ul>
+          <li>Lower marketing cost</li>
+          <li>Higher visibility</li>
+          <li>Transparent results</li>
+          <li>Supports creator economy</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Advertising System on Pose</h3>
+      <p>Pose integrates ads naturally into content.</p>
+      <ul>
+        <li>Banner ads</li>
+        <li>Comment-section ads</li>
+        <li>In-feed video ads</li>
+        <li>Sponsored posts</li>
+      </ul>
+      <p><strong>Ads are designed to support creators without destroying user experience.</strong></p>
+
+      <div class="divider"></div>
+
+      <h3>Analytics and Creator Dashboard</h3>
+      <p>Creators have access to a detailed dashboard.</p>
+      <p>They can see:</p>
+      <ul>
+        <li>Total views</li>
+        <li>Earnings (in Pose Coins and Naira equivalent)</li>
+        <li>Engagement rate</li>
+        <li>Viral performance</li>
+        <li>Wallet balance</li>
+        <li>Withdrawal history</li>
+        <li>Cashback earned</li>
+        <li>Active coupons</li>
+      </ul>
+      <p><strong>This helps creators make better content and grow faster.</strong></p>
+
+      <div class="divider"></div>
+
+      <h3>Viewer Benefits</h3>
+      <p>Pose is designed to benefit users as much as creators.</p>
+
+      <h4>For Viewers</h4>
+      <ul>
+        <li>Pay only for what you watch using Pose Coins</li>
+        <li>Access free and premium content</li>
+        <li>Download for offline viewing</li>
+        <li>Read books digitally</li>
+        <li>Discover new creators</li>
+        <li>No forced subscriptions</li>
+        <li>Earn cashback on every purchase</li>
+        <li>Redeem exclusive coupons</li>
+      </ul>
+
+      <h4>For Readers</h4>
+      <ul>
+        <li>Free books available</li>
+        <li>Premium books for small payments (Pose Coins)</li>
+        <li>Access anywhere</li>
+        <li>Cashback on book purchases</li>
+      </ul>
+
+      <div class="divider"></div>
+
+      <h3>Global Vision of Pose</h3>
+      <div class="highlight-box">
+        <p>Pose is built as a global platform.</p>
+        <ul>
+          <li>Open to creators and users worldwide</li>
+          <li>Scalable pricing system with Pose Coins</li>
+          <li>Multiple monetization models</li>
+          <li>Supports different cultures and content types</li>
+          <li>Focused on fairness and transparency</li>
+        </ul>
+        <p style="margin-bottom:0"><strong>Pose is not limited to any region. It is built for the world.</strong></p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>Why Pose Is Different</h3>
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Traditional Platforms</th>
+            <th>Pose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Payment</strong></td>
+            <td>Subscriptions / Low payouts</td>
+            <td>Flexible PAYG with Pose Coins / High payouts</td>
+          </tr>
+          <tr>
+            <td><strong>Creator Earnings</strong></td>
+            <td>Delayed / Limited</td>
+            <td>Instant / Transparent</td>
+          </tr>
+          <tr>
+            <td><strong>Viral Growth</strong></td>
+            <td>Limited</td>
+            <td>Built-in Multiplier</td>
+          </tr>
+          <tr>
+            <td><strong>Ownership</strong></td>
+            <td>Rare</td>
+            <td>Download Option</td>
+          </tr>
+          <tr>
+            <td><strong>Business Ads</strong></td>
+            <td>Expensive</td>
+            <td>High Reach / Low Cost</td>
+          </tr>
+          <tr>
+            <td><strong>Rewards</strong></td>
+            <td>None</td>
+            <td>Cashback & Coupons 🪙</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="divider"></div>
+
+      <h3>Summary</h3>
+      <div class="highlight-box">
+        <p><strong>Pose combines:</strong></p>
+        <ul>
+          <li>Short-form discovery (For You)</li>
+          <li>Social discussions (Tweet)</li>
+          <li>Long-form content (Pose)</li>
+          <li>Music platform (Pose Music)</li>
+          <li>Pay-As-You-Watch with Pose Coins 🪙</li>
+          <li>Viral Multiplier</li>
+          <li>Download ownership</li>
+          <li>Business promotions</li>
+          <li>Instant payouts</li>
+          <li>Cashback rewards</li>
+          <li>Exclusive coupons</li>
+        </ul>
+        <p style="font-size:18px;margin-bottom:0"><strong>All in one global creator-first ecosystem.</strong></p>
+      </div>
+
+      <p style="text-align:center;font-size:20px;margin-top:32px;color:var(--primary)"><strong>Pose exists to help creators earn more, help users pay less with Pose Coins, and create a fair digital economy for everyone. 🪙</strong></p>
     </section>
 
     <!-- Profile Section -->
@@ -908,7 +1363,7 @@
             <span class="verified">✓</span>
             <span class="profile-handle">@posecreator</span>
           </div>
-          <p style="color:var(--text-secondary);margin:8px 0">African creator • Skits • Dance • Exclusive content</p>
+          <p style="color:var(--text-secondary);margin:8px 0">Global creator • Skits • Dance • Exclusive content</p>
           <div class="profile-stats">
             <div class="profile-stat">
               <div class="profile-stat-value">12.5K</div>
@@ -927,14 +1382,14 @@
               <div class="profile-stat-label">Views</div>
             </div>
             <div class="profile-stat">
-              <div class="profile-stat-value">₦82,400</div>
-              <div class="profile-stat-label">Earnings</div>
+              <div class="profile-stat-value">🪙 3,296</div>
+              <div class="profile-stat-label">Pose Coins</div>
             </div>
           </div>
         </div>
         <div class="profile-actions">
           <button class="btn btn-secondary" id="btnEditProfile">Edit Profile</button>
-          <button class="btn btn-primary" id="btnWallet">💳 Wallet</button>
+          <button class="btn btn-primary" id="btnWallet">🪙 Wallet</button>
         </div>
       </div>
 
@@ -979,20 +1434,20 @@
           <div class="content-grid" id="exclusiveGrid">
             <div class="video-card">
               <div class="video-thumbnail">🔒
-                <div class="video-badge">Premium</div>
+                <div class="video-badge">🪙 6 Coins</div>
               </div>
               <div class="video-info">
                 <div class="video-title">Behind the Scenes</div>
-                <div class="video-meta">800 paid views • ₦160 each</div>
+                <div class="video-meta">800 paid views</div>
               </div>
             </div>
             <div class="video-card">
               <div class="video-thumbnail">🔒
-                <div class="video-badge">Premium</div>
+                <div class="video-badge">🪙 8 Coins</div>
               </div>
               <div class="video-info">
                 <div class="video-title">Exclusive Skit</div>
-                <div class="video-meta">600 paid views • ₦200 each</div>
+                <div class="video-meta">600 paid views</div>
               </div>
             </div>
           </div>
@@ -1020,32 +1475,42 @@
 
         <!-- Post/Tweet -->
         <div data-panel="tweet" class="hidden">
-          <div class="post" style="background:var(--bg-main)">
-            <div class="post-header">
-              <div class="post-avatar">U</div>
-              <div style="flex:1">
-                <textarea 
-                  class="form-textarea" 
-                  id="tweetText" 
-                  placeholder="What's happening? Share your thoughts..."
-                  style="margin-bottom:12px"
-                ></textarea>
-                <div style="display:flex;gap:12px;align-items:center">
-                  <label class="btn btn-secondary" style="padding:8px 16px;cursor:pointer">
-                    📎 Add Media
-                    <input type="file" id="tweetMedia" accept="image/*,video/*" style="display:none" />
-                  </label>
-                  <button class="btn btn-primary" id="postTweet">
-                    <span id="postTweetText">Post</span>
-                  </button>
+          <div class="feed">
+            <div class="post">
+              <div class="post-header">
+                <div class="post-avatar">PK</div>
+                <div class="post-author">
+                  <div class="post-author-name">Pose Creator</div>
+                  <div class="post-time">2 hours ago</div>
                 </div>
-                <div id="mediaPreview" class="mt-2 hidden"></div>
+              </div>
+              <div class="post-content">
+                Just earned 🪙 150 Pose Coins from my latest video! Plus 5% cashback. This platform really values creators! 🚀
+              </div>
+              <div class="post-actions">
+                <button class="post-action">❤️ 234</button>
+                <button class="post-action">💬 45</button>
+                <button class="post-action">🔁 67</button>
               </div>
             </div>
-          </div>
 
-          <div id="tweetsFeed" class="feed">
-            <!-- Loaded posts appear here -->
+            <div class="post">
+              <div class="post-header">
+                <div class="post-avatar">CU</div>
+                <div class="post-author">
+                  <div class="post-author-name">Creative User</div>
+                  <div class="post-time">5 hours ago</div>
+                </div>
+              </div>
+              <div class="post-content">
+                The cashback and coupons system on Pose is amazing! Saved 🪙 20 coins this week alone. 💰
+              </div>
+              <div class="post-actions">
+                <button class="post-action">❤️ 189</button>
+                <button class="post-action">💬 32</button>
+                <button class="post-action">🔁 41</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1071,88 +1536,18 @@
       </div>
     </section>
 
-    <!-- Upload Section -->
-    <section class="upload-section">
-      <h2 style="margin-bottom:24px">Upload Content</h2>
-      <form id="uploadForm">
-        <div class="form-group">
-          <label class="form-label">Title</label>
-          <input 
-            type="text" 
-            class="form-input" 
-            id="postTitle" 
-            placeholder="Give your content a catchy title"
-            required
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Description (Optional)</label>
-          <textarea 
-            class="form-textarea" 
-            id="postDesc" 
-            placeholder="Tell viewers what this is about..."
-          ></textarea>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Media File</label>
-          <div class="form-file" id="fileDropZone">
-            <input 
-              type="file" 
-              id="postFile" 
-              accept="image/*,video/*" 
-              style="display:none"
-            />
-            <div id="fileLabel">
-              📁 Click to upload or drag & drop<br>
-              <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="form-checkbox">
-            <input type="checkbox" id="isPremium" />
-            <label for="isPremium" style="margin:0">🔒 Mark as Exclusive (Pay-to-Watch)</label>
-          </div>
-        </div>
-
-        <div class="form-group" id="priceGroup" style="display:none">
-          <label class="form-label">Price per View (₦)</label>
-          <input 
-            type="number" 
-            class="form-input" 
-            id="pricePerView" 
-            placeholder="e.g., 160"
-            min="50"
-            step="10"
-          />
-        </div>
-
-        <div style="display:flex;gap:12px">
-          <button type="submit" class="btn btn-primary" id="uploadBtn">
-            <span id="uploadBtnText">📤 Upload & Publish</span>
-          </button>
-          <button type="button" class="btn btn-secondary" id="clearForm">
-            Clear Form
-          </button>
-        </div>
-      </form>
-    </section>
-
     <!-- Footer -->
     <footer>
-      <div style="font-size:18px;font-weight:700;margin-bottom:12px">POSE</div>
-      <p>Built for African creators</p>
+      <div style="font-size:18px;font-weight:700;margin-bottom:12px">POSE 🪙</div>
+      <p>Built for global creators • Powered by Pose Coin</p>
       <p style="margin-top:12px;font-size:14px">
-        <a href="#" style="margin:0 12px">About</a>
-        <a href="#" style="margin:0 12px">Creator Programs</a>
+        <a href="#learn-more" style="margin:0 12px">About</a>
+        <a href="#pose-coin" style="margin:0 12px">Pose Coin</a>
         <a href="#" style="margin:0 12px">Support</a>
         <a href="#" style="margin:0 12px">Terms</a>
       </p>
       <p style="margin-top:16px;font-size:13px;color:var(--text-muted)">
-        Contact: hello@pose.app (demo)
+        Contact: hello@pose.app
       </p>
     </footer>
   </div>
@@ -1160,9 +1555,7 @@
   <!-- Firebase v9 (Modular) -->
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
-    import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
-    import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js';
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
     // ================== FIREBASE CONFIG ==================
     const firebaseConfig = {
@@ -1177,8 +1570,6 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
 
     // ================== UTILITY FUNCTIONS ==================
     
@@ -1201,121 +1592,6 @@
         setTimeout(() => toast.remove(), 300);
       }, 3000);
     }
-
-    // Format file size
-    function formatFileSize(bytes) {
-      if (bytes < 1024) return bytes + ' B';
-      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
-    }
-
-    // Escape HTML
-    function escapeHtml(str) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
-    }
-
-    // Format timestamp
-    function formatTime(timestamp) {
-      if (!timestamp) return 'Just now';
-      const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-      const now = new Date();
-      const diff = Math.floor((now - date) / 1000);
-      
-      if (diff < 60) return 'Just now';
-      if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
-      if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
-      return Math.floor(diff / 86400) + 'd ago';
-    }
-
-    // ================== MONETIZATION TAB CONTENT ==================
-    const monetContent = {
-      pay: `
-        <h3>💎 Pay-to-Watch (Exclusive Content)</h3>
-        <p style="color:var(--text-secondary);margin:16px 0">
-          Creators set a price for exclusive videos. Fans pay to unlock premium content. 
-          Instant micro-payments flow directly to your creator wallet once minimum views are reached.
-        </p>
-        <ul>
-          <li>Set custom price per view (minimum ₦50)</li>
-          <li>Instant payouts after threshold (e.g., 100 paid views)</li>
-          <li>Track paid views and revenue in real-time dashboard</li>
-          <li>70-85% revenue share goes directly to creators</li>
-          <li>No delays, no minimums for withdrawal</li>
-        </ul>
-      `,
-      smart: `
-        <h3>📺 Smart Ad Revenue</h3>
-        <p style="color:var(--text-secondary);margin:16px 0">
-          Non-intrusive ad units placed strategically under videos and in comment areas. 
-          Creators earn a generous share of ad revenue based on impressions and engagement.
-        </p>
-        <ul>
-          <li>Ad placement respects viewer experience</li>
-          <li>Real-time revenue share analytics in dashboard</li>
-          <li>Choose ad types and placements</li>
-          <li>Estimated ₦200 per 1,000 banner ad views</li>
-          <li>Higher engagement = higher earnings</li>
-        </ul>
-      `,
-      comment: `
-        <h3>💬 Comment Ad Boost</h3>
-        <p style="color:var(--text-secondary);margin:16px 0">
-          Ads tied to comment sections on feed posts. Posts with high engagement 
-          surface premium ad slots, maximizing creator earnings.
-        </p>
-        <ul>
-          <li>Earn from engaged audiences in comments</li>
-          <li>Premium slots for viral posts</li>
-          <li>Non-disruptive ad integration</li>
-          <li>Bonus earnings for trending content</li>
-        </ul>
-      `,
-      instant: `
-        <h3>⚡ Instant Video Revenue (Ad-Free)</h3>
-        <p style="color:var(--text-secondary);margin:16px 0">
-          A YouTube-like tab where creators publish longer-form content. 
-          Fans pay instantly for premium access; creators receive higher payouts with no in-video ads.
-        </p>
-        <ul>
-          <li>Publish long-form content (tutorials, vlogs, series)</li>
-          <li>Premium access model with instant payments</li>
-          <li>85% revenue share for instant video content</li>
-          <li>Ad-free viewing experience for premium subscribers</li>
-          <li>Build recurring revenue with series content</li>
-        </ul>
-      `,
-      banner: `
-        <h3>🎬 Banner Reward System</h3>
-        <p style="color:var(--text-secondary);margin:16px 0">
-          Short-form swipeable videos earn revenue via banner ads. 
-          Perfect for viral shorts and quick entertainment content.
-        </p>
-        <ul>
-          <li>Earn from short-form vertical videos (15-60s)</li>
-          <li>Per-1,000-view earnings (example: ₦200/1K views)</li>
-          <li>Minimal intrusion with banner placement</li>
-          <li>Viral potential = higher earnings</li>
-          <li>Perfect for TikTok-style content</li>
-        </ul>
-      `
-    };
-
-    // Set monetization content
-    function setMonetContent(key) {
-      document.getElementById('monetContent').innerHTML = monetContent[key] || '';
-    }
-
-    // Initialize monetization tabs
-    document.querySelectorAll('#monetTabs .monet-tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('#monetTabs .monet-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        setMonetContent(tab.dataset.tab);
-      });
-    });
-    setMonetContent('pay');
 
     // ================== MAIN TABS ==================
     document.querySelectorAll('#mainTabs .tab').forEach(tab => {
@@ -1355,7 +1631,7 @@
         profileAvatar.textContent = initial;
         profileName.textContent = user.email || 'Creator';
         
-        showToast('Welcome back, ' + (user.email || 'Creator') + '!', 'success');
+        showToast('Welcome back! Your Pose Coin wallet is ready. 🪙', 'success');
       } else {
         currentUser = null;
         btnAuth.classList.remove('hidden');
@@ -1366,9 +1642,6 @@
     // Auth state observer
     onAuthStateChanged(auth, (user) => {
       updateAuthUI(user);
-      if (user) {
-        loadTweets();
-      }
     });
 
     // Demo login
@@ -1379,7 +1652,7 @@
         if (err.code === 'auth/user-not-found') {
           try {
             await createUserWithEmailAndPassword(auth, demoCred.email, demoCred.password);
-            showToast('Demo account created successfully!', 'success');
+            showToast('Demo account created! Enjoy 🪙 100 welcome bonus!', 'success');
           } catch (e) {
             showToast('Error: ' + e.message, 'error');
           }
@@ -1399,285 +1672,13 @@
       }
     });
 
-    
-
-    // ================== FILE UPLOAD ==================
-    async function uploadFileToStorage(file, path) {
-      if (!file) return null;
-      
-      const storageRef = ref(storage, `${path}/${Date.now()}_${file.name}`);
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      return url;
-    }
-
-    // ================== UPLOAD FORM ==================
-    const isPremiumCheckbox = document.getElementById('isPremium');
-    const priceGroup = document.getElementById('priceGroup');
-
-    isPremiumCheckbox.addEventListener('change', () => {
-      priceGroup.style.display = isPremiumCheckbox.checked ? 'block' : 'none';
+    // CTA buttons
+    document.getElementById('btnGetStarted').addEventListener('click', () => {
+      window.open('https://poseapp.vercel.app/', '_blank');
     });
 
-    // File drop zone
-    const fileDropZone = document.getElementById('fileDropZone');
-    const postFile = document.getElementById('postFile');
-    const fileLabel = document.getElementById('fileLabel');
-
-    fileDropZone.addEventListener('click', () => postFile.click());
-
-    postFile.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        fileLabel.innerHTML = `
-          ✓ ${file.name}<br>
-          <small style="color:var(--text-secondary)">${formatFileSize(file.size)}</small>
-        `;
-      }
-    });
-
-    // Drag and drop
-    fileDropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      fileDropZone.style.borderColor = 'var(--primary)';
-      fileDropZone.style.background = 'rgba(76,29,149,0.05)';
-    });
-
-    fileDropZone.addEventListener('dragleave', () => {
-      fileDropZone.style.borderColor = 'var(--border)';
-      fileDropZone.style.background = 'transparent';
-    });
-
-    fileDropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      fileDropZone.style.borderColor = 'var(--border)';
-      fileDropZone.style.background = 'transparent';
-      
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        postFile.files = e.dataTransfer.files;
-        fileLabel.innerHTML = `
-          ✓ ${file.name}<br>
-          <small style="color:var(--text-secondary)">${formatFileSize(file.size)}</small>
-        `;
-      }
-    });
-
-    // Upload form submission
-    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      if (!currentUser) {
-        showToast('Please sign in to upload content', 'error');
-        return;
-      }
-
-      const title = document.getElementById('postTitle').value.trim();
-      const desc = document.getElementById('postDesc').value.trim();
-      const file = postFile.files[0];
-      const isPremium = isPremiumCheckbox.checked;
-      const price = Number(document.getElementById('pricePerView').value) || 0;
-
-      if (!title) {
-        showToast('Please enter a title', 'error');
-        return;
-      }
-
-      if (!file) {
-        showToast('Please select a file to upload', 'error');
-        return;
-      }
-
-      if (isPremium && price < 50) {
-        showToast('Minimum price for exclusive content is ₦50', 'error');
-        return;
-      }
-
-      const uploadBtn = document.getElementById('uploadBtn');
-      const uploadBtnText = document.getElementById('uploadBtnText');
-      
-      uploadBtn.disabled = true;
-      uploadBtnText.innerHTML = '<span class="spinner"></span> Uploading...';
-
-      try {
-        const fileUrl = await uploadFileToStorage(file, 'posts');
-        
-        await addDoc(collection(db, 'posts'), {
-          owner: currentUser.uid,
-          ownerEmail: currentUser.email,
-          title,
-          description: desc,
-          fileUrl,
-          isPremium,
-          price,
-          createdAt: serverTimestamp(),
-          views: 0,
-          likes: 0
-        });
-
-        showToast('Content uploaded successfully!', 'success');
-        
-        // Reset form
-        document.getElementById('uploadForm').reset();
-        fileLabel.innerHTML = `
-          📁 Click to upload or drag & drop<br>
-          <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
-        `;
-        priceGroup.style.display = 'none';
-        
-      } catch (err) {
-        console.error(err);
-        showToast('Upload failed: ' + err.message, 'error');
-      } finally {
-        uploadBtn.disabled = false;
-        uploadBtnText.textContent = '📤 Upload & Publish';
-      }
-    });
-
-    // Clear form
-    document.getElementById('clearForm').addEventListener('click', () => {
-      document.getElementById('uploadForm').reset();
-      fileLabel.innerHTML = `
-        📁 Click to upload or drag & drop<br>
-        <small style="color:var(--text-secondary)">Images or Videos (Max 100MB)</small>
-      `;
-      priceGroup.style.display = 'none';
-    });
-
-    // ================== TWEET/POST FUNCTIONALITY ==================
-    const tweetMedia = document.getElementById('tweetMedia');
-    const mediaPreview = document.getElementById('mediaPreview');
-
-    tweetMedia.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        mediaPreview.classList.remove('hidden');
-        const fileType = file.type.startsWith('image') ? 'Image' : 'Video';
-        mediaPreview.innerHTML = `
-          <div style="padding:12px;background:var(--bg-card);border-radius:var(--radius-sm);display:flex;align-items:center;gap:12px">
-            <span>${fileType}: ${file.name}</span>
-            <button onclick="this.parentElement.parentElement.classList.add('hidden');document.getElementById('tweetMedia').value=''" 
-                    style="margin-left:auto;background:transparent;border:none;cursor:pointer;font-size:18px">✕</button>
-          </div>
-        `;
-      }
-    });
-
-    // Post tweet
-    document.getElementById('postTweet').addEventListener('click', async () => {
-      if (!currentUser) {
-        showToast('Please sign in to post', 'error');
-        return;
-      }
-
-      const text = document.getElementById('tweetText').value.trim();
-      const file = tweetMedia.files[0];
-
-      if (!text && !file) {
-        showToast('Please write something or attach media', 'error');
-        return;
-      }
-
-      const postTweetBtn = document.getElementById('postTweet');
-      const postTweetText = document.getElementById('postTweetText');
-      
-      postTweetBtn.disabled = true;
-      postTweetText.innerHTML = '<span class="spinner"></span>';
-
-      try {
-        let mediaUrl = null;
-        if (file) {
-          mediaUrl = await uploadFileToStorage(file, 'tweets');
-        }
-
-        await addDoc(collection(db, 'tweets'), {
-          owner: currentUser.uid,
-          ownerEmail: currentUser.email,
-          text,
-          mediaUrl,
-          createdAt: serverTimestamp(),
-          likes: 0,
-          comments: 0,
-          retweets: 0
-        });
-
-        showToast('Posted successfully!', 'success');
-        document.getElementById('tweetText').value = '';
-        tweetMedia.value = '';
-        mediaPreview.classList.add('hidden');
-        
-        loadTweets();
-        
-      } catch (err) {
-        console.error(err);
-        showToast('Post failed: ' + err.message, 'error');
-      } finally {
-        postTweetBtn.disabled = false;
-        postTweetText.textContent = 'Post';
-      }
-    });
-
-    // Load tweets
-    async function loadTweets() {
-      const container = document.getElementById('tweetsFeed');
-      container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">Loading posts...</div>';
-
-      try {
-        const q = query(collection(db, 'tweets'), orderBy('createdAt', 'desc'), limit(20));
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-          container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary)">No posts yet. Be the first to post!</div>';
-          return;
-        }
-
-        container.innerHTML = '';
-
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          const postEl = document.createElement('div');
-          postEl.className = 'post';
-
-          const initial = data.ownerEmail ? data.ownerEmail[0].toUpperCase() : 'U';
-          const name = data.ownerEmail ? data.ownerEmail.split('@')[0] : 'User';
-
-          postEl.innerHTML = `
-            <div class="post-header">
-              <div class="post-avatar">${initial}</div>
-              <div class="post-author">
-                <div class="post-author-name">${escapeHtml(name)}</div>
-                <div class="post-time">${formatTime(data.createdAt)}</div>
-              </div>
-            </div>
-            ${data.text ? `<div class="post-content">${escapeHtml(data.text)}</div>` : ''}
-            ${data.mediaUrl ? `<div class="post-media"><img src="${data.mediaUrl}" alt="Post media" /></div>` : ''}
-            <div class="post-actions">
-              <button class="post-action">❤️ ${data.likes || 0}</button>
-              <button class="post-action">💬 ${data.comments || 0}</button>
-              <button class="post-action">🔁 ${data.retweets || 0}</button>
-            </div>
-          `;
-
-          container.appendChild(postEl);
-        });
-
-      } catch (err) {
-        console.error(err);
-        container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary)">Error loading posts</div>';
-      }
-    }
-
-    // Wait until the page loads
-  document.addEventListener("DOMContentLoaded", function() {
-    const btn = document.getElementById("btnGetStarted");
-    if (btn) {
-      btn.addEventListener("click", function() {
-        window.open("https://poseapp.vercel.app/", "_blank");
-      });
-    }
-  });
     document.getElementById('btnWatchDemo').addEventListener('click', () => {
-      showToast('Demo video feature coming soon!', 'info');
+      showToast('Demo video feature coming soon! 🎬', 'info');
     });
 
     document.getElementById('btnEditProfile').addEventListener('click', () => {
@@ -1685,12 +1686,12 @@
     });
 
     document.getElementById('btnWallet').addEventListener('click', () => {
-      showToast('Wallet feature coming soon!', 'info');
+      showToast('🪙 Wallet: 3,296 Pose Coins (₦82,400) • 5% cashback active!', 'success');
     });
 
     // Initialize
-    console.log('🎬 Pose Platform Initialized');
-    showToast('Welcome to Pose! Sign in to get started.', 'info');
+    console.log('🎬 Pose Platform Initialized with Pose Coin 🪙');
+    showToast('Welcome to Pose! Experience Pose Coin rewards. 🪙', 'info');
   </script>
 </body>
-</html>
+  </html>
